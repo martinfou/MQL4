@@ -1,0 +1,1 @@
+/usr/local/bin/wine "/Applications/IC Markets.app/drive_c/Program Files/MetaTrader 4 IC Markets/metaeditor.exe" /compile:"/Applications/IC Markets.app/drive_c/Program Files/MetaTrader 4 IC Markets/MQL4/Experts" /log
