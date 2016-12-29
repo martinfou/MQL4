@@ -1,0 +1,20 @@
+0	00:47:57.549	Expert myfirstrobot AUDUSD,H1: loaded successfully
+0	00:48:00.296	myfirstrobot AUDUSD,H1 inputs: Lots=0.01; MaximumRisk=0.02; DecreaseFactor=3.0; MovingPeriod=12; MovingShift=6; 
+0	00:48:00.307	myfirstrobot AUDUSD,H1: initialized
+0	00:48:00.307	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:00.307	myfirstrobot AUDUSD,H1: latbar 0 current bar 1482994800price 
+0	00:48:00.307	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:00.740	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:00.740	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:01.096	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:01.096	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:06.859	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:06.859	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:07.047	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:07.047	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:08.232	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:08.233	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:08.270	myfirstrobot AUDUSD,H1: openprice : 0.72009
+0	00:48:08.270	myfirstrobot AUDUSD,H1: latbar 1482994800 current bar 1482994800price 
+0	00:48:08.616	myfirstrobot AUDUSD,H1: uninit reason 4
+0	00:48:08.760	Expert myfirstrobot AUDUSD,H1: removed
