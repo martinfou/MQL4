@@ -9,9 +9,10 @@
 
 #define MAGICMA  20131111
 //--- Inputs
-input double Lots          =0.01;
-input double TakeProfitInPips    =0.00070;
-input double TakeLossInPips      =0.00020;
+input double Lots=0.01;
+input double TakeProfitInPips=0.00910;
+input double TakeLossInPips=0.00910;
+input int ConcurrentOrders=3;
 
 int barcounter=0;
 //+------------------------------------------------------------------+
@@ -42,7 +43,7 @@ bool isStocaticSignalBuy()
   {
    double modemain=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_MAIN,0);
    double modesignal=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_SIGNAL,0);
-   if(modemain<20 && modesignal<20)
+   if(modemain<10 && modesignal<10)
      {
       return true;
      }
@@ -59,7 +60,7 @@ bool isStocaticSignalSell()
   {
    double modemain=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_MAIN,0);
    double modesignal=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_SIGNAL,0);
-   if(modemain>80 && modesignal>80)
+   if(modemain>90 && modesignal>90)
      {
       return true;
      }
@@ -78,23 +79,19 @@ int buy()
    double takeProfit=askPrice+TakeProfitInPips;
    double stopLost=askPrice-TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_BUY,Lots,askPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Blue);
-   Print("I just bought "+ticket);
    return ticket;
   }
-  
-  int sell()
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int sell()
   {
    double bidPrice=Bid;
    double takeProfit=bidPrice-TakeProfitInPips;
    double stopLost=bidPrice+TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_SELL,Lots,bidPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Red);
-   Print("I just bought "+ticket);
    return ticket;
   }
-  
-  
-  
-  
 //+------------------------------------------------------------------+
 //| OnTick function                                                  |
 //+------------------------------------------------------------------+
@@ -106,15 +103,18 @@ void OnTick()
 
    if(newBar())
      {
-      if(isStocaticSignalBuy())
+      if(OrdersTotal()<ConcurrentOrders)
         {
-         buy();
+         if(isStocaticSignalBuy())
+           {
+            buy();
+           }
+         if(isStocaticSignalSell())
+           {
+            sell();
+           }
         }
-      if(isStocaticSignalSell())
-      {
-         sell();
-      }
-
+        Print("I have that many orders open "+OrdersTotal());
      }
   }
 //+------------------------------------------------------------------+
