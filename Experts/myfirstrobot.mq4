@@ -7,7 +7,11 @@
 #property link        "http://www.mql4.com"
 #property description "My first robot"
 
+#import "BarStats.mq4"
+bool IsNewBar();
+
 #define MAGICMA  20131111
+
 //--- Inputs
 input double Lots=0.01;
 input double TakeProfitInPips=0.00910;
@@ -101,8 +105,11 @@ void OnTick()
    double ma17 = iMA(NULL,0,17,0,MODE_EMA,PRICE_CLOSE,0);
    double ma37 = iMA(NULL,0,37,0,MODE_EMA,PRICE_CLOSE,0);
 
-   if(newBar())
+   if(IsNewBar())
      {
+     
+     double val=iCustom(NULL,0,"Heiken Ashi",13,1,0);
+     Print("val = " + val);
       if(OrdersTotal()<ConcurrentOrders)
         {
          if(isStocaticSignalBuy())

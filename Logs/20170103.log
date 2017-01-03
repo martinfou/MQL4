@@ -1,0 +1,8 @@
+0	00:36:21.045	Spread EURUSD,M1: deinitialized
+0	00:36:21.048	Spread EURUSD,M1: uninit reason 9
+0	00:36:21.048	heiken_ashi EURUSD,M1: uninit reason 9
+0	00:36:21.048	Heiken_Ashi_Smoothed EURUSD,M1: uninit reason 9
+0	00:36:21.054	Custom indicator Spread EURUSD,M1: removed
+0	00:36:21.056	Custom indicator heiken_ashi EURUSD,M1: removed
+0	00:36:21.057	Custom indicator Heiken_Ashi_Smoothed EURUSD,M1: removed
+0	01:18:00.875	Custom indicator Downloads\heiken_ashi EURUSD,H1: loaded successfully
