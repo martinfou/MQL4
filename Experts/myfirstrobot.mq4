@@ -7,9 +7,6 @@
 #property link        "http://www.mql4.com"
 #property description "My first robot"
 
-#import "BarStats.mq4"
-bool IsNewBar();
-
 #define MAGICMA  20131111
 
 //--- Inputs
@@ -17,12 +14,11 @@ input double Lots=0.01;
 input double TakeProfitInPips=0.00910;
 input double TakeLossInPips=0.00910;
 input int ConcurrentOrders=3;
+input int MaxTransactionPerBarCounter=1;
+input int isStocaticSignalBuy=15;
+input int isStocaticSignalSell=95;
 
-int barcounter=0;
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-
+int TransactionPerBarCounter=0;
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -47,7 +43,7 @@ bool isStocaticSignalBuy()
   {
    double modemain=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_MAIN,0);
    double modesignal=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_SIGNAL,0);
-   if(modemain<10 && modesignal<10)
+   if(modemain<isStocaticSignalBuy && modesignal<isStocaticSignalBuy)
      {
       return true;
      }
@@ -64,7 +60,7 @@ bool isStocaticSignalSell()
   {
    double modemain=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_MAIN,0);
    double modesignal=iStochastic(NULL,0,5,3,3,MODE_SMA,0,MODE_SIGNAL,0);
-   if(modemain>90 && modesignal>90)
+   if(modemain>isStocaticSignalSell && modesignal>isStocaticSignalSell)
      {
       return true;
      }
@@ -83,6 +79,7 @@ int buy()
    double takeProfit=askPrice+TakeProfitInPips;
    double stopLost=askPrice-TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_BUY,Lots,askPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Blue);
+   TransactionPerBarCounter=TransactionPerBarCounter+1;
    return ticket;
   }
 //+------------------------------------------------------------------+
@@ -94,6 +91,7 @@ int sell()
    double takeProfit=bidPrice-TakeProfitInPips;
    double stopLost=bidPrice+TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_SELL,Lots,bidPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Red);
+   TransactionPerBarCounter=TransactionPerBarCounter+1;
    return ticket;
   }
 //+------------------------------------------------------------------+
@@ -105,23 +103,22 @@ void OnTick()
    double ma17 = iMA(NULL,0,17,0,MODE_EMA,PRICE_CLOSE,0);
    double ma37 = iMA(NULL,0,37,0,MODE_EMA,PRICE_CLOSE,0);
 
-   if(IsNewBar())
+   if(newBar())
      {
-     
-     double val=iCustom(NULL,0,"Heiken Ashi",13,1,0);
-     Print("val = " + val);
-      if(OrdersTotal()<ConcurrentOrders)
-        {
-         if(isStocaticSignalBuy())
-           {
-            buy();
-           }
-         if(isStocaticSignalSell())
-           {
-            sell();
-           }
-        }
-        Print("I have that many orders open "+OrdersTotal());
+      TransactionPerBarCounter=0;
      }
+
+   if(OrdersTotal()<ConcurrentOrders)
+     {
+      if(isStocaticSignalBuy())
+        {
+         buy();
+        }
+      if(isStocaticSignalSell())
+        {
+         sell();
+        }
+     }
+   Print("I have that many orders open "+OrdersTotal());
   }
 //+------------------------------------------------------------------+
