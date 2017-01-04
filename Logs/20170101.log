@@ -1,5 +1,0 @@
-0	00:49:46.956	Expert myfirstrobot EURUSD,H1: loaded successfully
-0	00:49:48.885	myfirstrobot EURUSD,H1 inputs: Lots=0.01; TakeProfitInPips=0.0091; TakeLossInPips=0.0091; ConcurrentOrders=3; 
-0	00:55:07.707	myfirstrobot EURUSD,H1: initialized
-0	01:08:15.113	myfirstrobot EURUSD,H1: uninit reason 4
-0	01:08:15.133	Expert myfirstrobot EURUSD,H1: removed
