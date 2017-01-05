@@ -11,14 +11,15 @@
 
 //--- Inputs
 input double Lots=0.01;
-input double TakeProfitInPips=0.00910;
-input double TakeLossInPips=0.00910;
-input int ConcurrentOrders=3;
+input double TakeProfitInPips=0.0010;
+input double TakeLossInPips=0.0007;
+input int ConcurrentOrders=300;
 input int MaxTransactionPerBarCounter=1;
 input int isStocaticSignalBuy=15;
 input int isStocaticSignalSell=95;
 
 int TransactionPerBarCounter=0;
+bool lastTransactionWasBuy=false;
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -80,6 +81,7 @@ int buy()
    double stopLost=askPrice-TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_BUY,Lots,askPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Blue);
    TransactionPerBarCounter=TransactionPerBarCounter+1;
+   lastTransactionWasBuy=true;
    return ticket;
   }
 //+------------------------------------------------------------------+
@@ -92,6 +94,7 @@ int sell()
    double stopLost=bidPrice+TakeLossInPips;
    int ticket=OrderSend(Symbol(),OP_SELL,Lots,bidPrice,3,stopLost,takeProfit,"this is a trade comment",MAGICMA,0,Red);
    TransactionPerBarCounter=TransactionPerBarCounter+1;
+   lastTransactionWasBuy=false;
    return ticket;
   }
 //+------------------------------------------------------------------+
@@ -110,15 +113,14 @@ void OnTick()
 
    if(OrdersTotal()<ConcurrentOrders)
      {
-      if(isStocaticSignalBuy())
+      if(isStocaticSignalBuy()&&lastTransactionWasBuy==false)
         {
          buy();
         }
-      if(isStocaticSignalSell())
+      if(isStocaticSignalSell()&&lastTransactionWasBuy==true)
         {
          sell();
         }
      }
-   Print("I have that many orders open "+OrdersTotal());
   }
 //+------------------------------------------------------------------+
