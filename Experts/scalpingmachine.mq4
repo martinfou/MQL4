@@ -11,12 +11,12 @@
 
 //--- Inputs
 input double Lots=0.01;
-input double TakeProfitInPips=0.0010;
-input double TakeLossInPips=0.0007;
+input double TakeProfitInPips=0.0003;
+input double TakeLossInPips=0.0001;
 input int ConcurrentOrders=300;
 input int MaxTransactionPerBarCounter=1;
-input int isStocaticSignalBuy=15;
-input int isStocaticSignalSell=95;
+input int isStocaticSignalBuy=10;
+input int isStocaticSignalSell=90;
 
 int TransactionPerBarCounter=0;
 bool lastTransactionWasBuy=false;
@@ -145,7 +145,7 @@ void OnTick()
       TransactionPerBarCounter=0;
      }
 
-   if(OrdersTotal()<ConcurrentOrders)
+   if(OrdersTotal() < ConcurrentOrders && TransactionPerBarCounter < MaxTransactionPerBarCounter)
      {
       if(isStocaticSignalBuy() && lastTransactionWasBuy==false)
         {
