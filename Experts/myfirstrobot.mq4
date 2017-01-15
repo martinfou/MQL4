@@ -113,11 +113,11 @@ void OnTick()
 
    if(OrdersTotal()<ConcurrentOrders)
      {
-      if(isStocaticSignalBuy()&&lastTransactionWasBuy==false)
+      if(isStocaticSignalBuy() && lastTransactionWasBuy==false)
         {
          buy();
         }
-      if(isStocaticSignalSell()&&lastTransactionWasBuy==true)
+      if(isStocaticSignalSell() && lastTransactionWasBuy==true)
         {
          sell();
         }
