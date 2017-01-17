@@ -19,6 +19,12 @@ public:
                      Utils();
                     ~Utils();
 
+   
+   void isTimeToTrade(){
+      startOfDay();
+      endOfDay();
+   }
+   
    //+------------------------------------------------------------------+
    //|   Detetect Start Of Day and Save Account Balance                 |
    //+------------------------------------------------------------------+
@@ -40,8 +46,8 @@ public:
         {
          for(int i=0;i<OrdersTotal();i++)
            {
-            OrderSelect(i,SELECT_BY_POS);
-            OrderClose(OrderTicket(),OrderLots(),MarketInfo(OrderSymbol(),MODE_BID),5,Red);
+            int ticket = OrderSelect(i,SELECT_BY_POS);
+            int status = OrderClose(OrderTicket(),OrderLots(),MarketInfo(OrderSymbol(),MODE_BID),5,Red);
            }
          this.isTradingAllowed=false;
          double profitOrLoss=startOfDayAccountBalance-AccountBalance();
