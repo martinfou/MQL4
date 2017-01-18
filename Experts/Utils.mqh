@@ -61,6 +61,7 @@ public:
    void setStartOfDayAccountBalance()
      {
       this.startOfDayAccountBalance=AccountBalance();
+      Print("=== START OF DAY === Account Balance ==>  ",this.startOfDayAccountBalance);
      }
 
    //+------------------------------------------------------------------+
@@ -73,7 +74,7 @@ public:
       if(lastbar!=curbar)
         {
          lastbar=curbar;
-         Print("new bar");
+         Print("=== NEW BAR ===");
          return (true);
         }
       else
