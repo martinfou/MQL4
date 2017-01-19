@@ -28,20 +28,19 @@ int OnInit()
 //+------------------------------------------------------------------+
 void OnTick()
   {
-   utils.startOfDay();
-   utils.endOfDay();
+   utils.isTimeToTrade();
 
-   if(OrdersTotal()<1)
+   if(OrdersTotal()<1 && utils.isNewBar())
      {
-      if(stocPop.isBuySignal())
+      if(stocPop.isInScalpingZone())
         {
-         stocPop.setTicket(OrderSend(Symbol(),OP_BUY,Lots,Ask,3,NULL,Ask+0.0002,"My order",16384,0,clrGreen));
-
+         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,3,Ask-0.00100,Ask+0.00020,"My order",16384,0,clrGreen));
         }
      }
-   if(OrdersTotal()>0)
+   if(stocPop.isOutScalpingZone())
      {
-
+      utils.closeAllOrders();
      }
   }
+
 //+------------------------------------------------------------------+

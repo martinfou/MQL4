@@ -19,12 +19,12 @@ public:
                      Utils();
                     ~Utils();
 
-   
-   void isTimeToTrade(){
+   void isTimeToTrade()
+     {
       startOfDay();
       endOfDay();
-   }
-   
+     }
+
    //+------------------------------------------------------------------+
    //|   Detetect Start Of Day and Save Account Balance                 |
    //+------------------------------------------------------------------+
@@ -44,11 +44,7 @@ public:
      {
       if(isTradingAllowed==true && Hour()==23 && Minute()>=45)
         {
-         for(int i=0;i<OrdersTotal();i++)
-           {
-            int ticket = OrderSelect(i,SELECT_BY_POS);
-            int status = OrderClose(OrderTicket(),OrderLots(),MarketInfo(OrderSymbol(),MODE_BID),5,Red);
-           }
+         closeAllOrders();
          this.isTradingAllowed=false;
          double profitOrLoss=startOfDayAccountBalance-AccountBalance();
          Print("===  END OF DAY   === Profit / Loss  ==> "+(string)profitOrLoss);
@@ -82,6 +78,27 @@ public:
          return(false);
         }
      }
+
+   void closeAllOrders()
+     {
+      if(OrdersTotal()>0)
+        {
+         for(int c=0; c<OrdersTotal(); c++)
+           {
+            OrderSelect(c,SELECT_BY_POS);
+
+            if(OrderType()==OP_BUY)
+              {
+               OrderClose(OrderTicket(),OrderLots(),Bid,3,Green);
+              }
+            else if(OrderType()==OP_SELL)
+              {
+               OrderClose(OrderTicket(),OrderLots(),Ask,3,Red);
+              }
+           }
+        }
+     }
+
   };
 //+------------------------------------------------------------------+
 //| Constructor setting attributes on class creations                |
