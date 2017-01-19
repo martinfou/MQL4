@@ -30,7 +30,6 @@ public:
    bool isInBuyScalpingZone()
      {
       double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,1);
-      double stoPrevious=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,2);
       if(stoCurrent>70 && this.inBuyScalpingZone==false)
         {
          this.inBuyScalpingZone=true;
@@ -41,7 +40,7 @@ public:
 
    bool isOutBuyScalpingZone()
      {
-      double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,1);
+      double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,0);
       if(stoCurrent<=70&& this.inBuyScalpingZone==true)
         {
         this.inBuyScalpingZone=false;

@@ -35,7 +35,7 @@ void OnTick()
      {
       if(stocPop.isInBuyScalpingZone())
         {
-         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,3,Ask-0.00100,Ask+takeProfitPips,"My order",16384,0,clrGreen));
+         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,1,NULL,Ask+takeProfitPips,"My order",16384,0,clrGreen));
         }
      }
    if(stocPop.isOutBuyScalpingZone())
