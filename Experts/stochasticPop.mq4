@@ -12,6 +12,7 @@
 #include "Utils.mqh"
 
 input double Lots=0.01;
+input double takeProfitPips=0.00050;
 
 Utils utils;
 StochasticPop stocPop;
@@ -32,9 +33,9 @@ void OnTick()
 
    if(OrdersTotal()<1 && utils.isNewBar())
      {
-      if(stocPop.isInScalpingZone())
+      if(stocPop.isInBuyScalpingZone())
         {
-         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,3,Ask-0.00100,Ask+0.00020,"My order",16384,0,clrGreen));
+         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,3,Ask-0.00100,Ask+takeProfitPips,"My order",16384,0,clrGreen));
         }
      }
    if(stocPop.isOutBuyScalpingZone())
