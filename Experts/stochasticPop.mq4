@@ -52,7 +52,7 @@ void OnTick()
       }
      }
 
-   if(OrdersTotal()>1 && (stocPop.isOutScalpingZone()))
+   if(OrdersTotal()>0 && (stocPop.isOutScalpingZone()))
      {
       utils.closeAllOrders();
      }
