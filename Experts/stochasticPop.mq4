@@ -12,7 +12,9 @@
 #include "Utils.mqh"
 
 input double Lots=0.01;
-input double takeProfitPips=0.00050;
+input double takeProfitPips=0.00020;
+
+bool buyToggle=FALSE;
 
 Utils utils;
 StochasticPop stocPop;
@@ -22,6 +24,7 @@ StochasticPop stocPop;
 int OnInit()
   {
    utils.setStartOfDayAccountBalance();
+
    return(INIT_SUCCEEDED);
   }
 //+------------------------------------------------------------------+
@@ -31,17 +34,29 @@ void OnTick()
   {
    utils.isTimeToTrade();
 
-   if(OrdersTotal()<1 && utils.isNewBar())
+
+   if(stocPop.isInBuyScalpingZone())
      {
-      if(stocPop.isInBuyScalpingZone())
-        {
-         stocPop.setTicket(OrderSend(NULL,OP_BUY,Lots,Ask,1,NULL,Ask+takeProfitPips,"My order",16384,0,clrGreen));
-        }
+     if(buyToggle==true){
+      Print("*** BUY ***", buyToggle);
+      buyToggle=false;
+      stocPop.setTicket(OrderSend(Symbol(),OP_BUY,Lots,Ask,1,NULL,Ask+takeProfitPips,"My order",16384,0,Red));
+}
      }
-   if(stocPop.isOutBuyScalpingZone())
+
+   if(stocPop.isInSellScalpingZone())
+     {
+     if(buyToggle==false){
+      buyToggle=true;
+      stocPop.setTicket(OrderSend(Symbol(),OP_SELL,Lots,Bid,1,NULL,Bid-takeProfitPips,"My order",99999,0,Green));
+      }
+     }
+
+   if(OrdersTotal()>1 && (stocPop.isOutScalpingZone()))
      {
       utils.closeAllOrders();
      }
+
   }
 
 //+------------------------------------------------------------------+

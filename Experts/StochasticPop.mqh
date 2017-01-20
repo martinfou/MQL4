@@ -17,8 +17,6 @@ class StochasticPop
 private:
    int               ticket;
    double            lastStoK;
-   bool              inBuyScalpingZone;
-   Utils             utils;
 
 public:
                      StochasticPop();
@@ -30,20 +28,42 @@ public:
    bool isInBuyScalpingZone()
      {
       double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,0);
-      if(stoCurrent>70 && this.inBuyScalpingZone==false)
+      if(stoCurrent>70&&stoCurrent<=100)
         {
-         this.inBuyScalpingZone=true;
          return true;
         }
       return false;
      }
 
-   bool isOutBuyScalpingZone()
+
+   bool isOutScalpingZone()
      {
       double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,0);
-      if(stoCurrent<=70&& this.inBuyScalpingZone==true)
+      if(stoCurrent<=70&&stoCurrent>=30)
         {
-        this.inBuyScalpingZone=false;
+         return true;
+        }
+      else
+        {
+         return false;
+        }
+     }
+
+   bool isInSellScalpingZone()
+     {
+      double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,0);
+      if(stoCurrent<30&&stoCurrent>=0)
+        {
+         return true;
+        }
+      return false;
+     }
+
+   bool isOutSellScalpingZone()
+     {
+      double stoCurrent=iStochastic(Symbol(),PERIOD_CURRENT,9,9,3,MODE_SMA,0,MODE_MAIN,0);
+      if(stoCurrent>=30)
+        {
          return true;
         }
       else
@@ -62,7 +82,6 @@ public:
 //+------------------------------------------------------------------+
 StochasticPop::StochasticPop()
   {
-   this.inBuyScalpingZone=false;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
