@@ -12,7 +12,7 @@
 #include "Utils.mqh"
 
 input double Lots=0.01;
-input double takeProfitPips=0.00020;
+input double takeProfitPips=0.00010;
 
 bool buyToggle=FALSE;
 
