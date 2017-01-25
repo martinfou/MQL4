@@ -69,7 +69,7 @@ void OnTick()
 //+------------------------------------------------------------------+
 void buy()
   {
-   OrderSend(Symbol(),OP_BUY,Lots,Ask,3,NULL,Ask+takeProfits,"Buy",911,0,Green);
+   OrderSend(Symbol(),OP_BUY,Lots,Ask,0,NULL,Ask+takeProfits,"Buy",911,0,Green);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -79,7 +79,7 @@ void buy()
 //+------------------------------------------------------------------+
 void sell()
   {
-   OrderSend(Symbol(),OP_SELL,Lots,Bid,3,NULL,Bid-takeProfits,"Sell",911,0,Red);
+   OrderSend(Symbol(),OP_SELL,Lots,Bid,0,NULL,Bid-takeProfits,"Sell",911,0,Red);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
