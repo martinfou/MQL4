@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright 2017, MetaQuotes Software Corp."
 #property link      "https://www.mql5.com"
-#property version   "1.00"
+#property version   "0.2"
 #property strict
 
 #include "Utils.mqh"
@@ -32,21 +32,35 @@ void OnDeinit(const int reason)
 
   }
 //+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool isNewBar()
+  {
+   static datetime lastbar;
+   datetime curbar=Time[0];
+   if(lastbar!=curbar)
+     {
+      lastbar=curbar;
+      return (true);
+     }
+   else
+     {
+      return(false);
+     }
+  }
+//+------------------------------------------------------------------+
 //| Expert tick function                                             |
 //+------------------------------------------------------------------+
 void OnTick()
   {
 //---
-   if(utils.isNewBar())
+   if(isNewBar())
      {
+      if(OrdersTotal()<40)
+        {
 
-      if(OrdersBuyTotal()==OrdersSellTotal())
-        {
-         sell();
          buy();
-        }
-      while(OrdersBuyTotal()!=OrdersSellTotal())
-        {
+         sell();
          if(OrdersBuyTotal()>OrdersSellTotal())
            {
             sell();
@@ -54,10 +68,8 @@ void OnTick()
          if(OrdersSellTotal()<OrdersBuyTotal())
            {
             buy();
-
            }
         }
-
      }
 
   }
@@ -69,7 +81,7 @@ void OnTick()
 //+------------------------------------------------------------------+
 void buy()
   {
-   OrderSend(Symbol(),OP_BUY,Lots,Ask,0,NULL,Ask+takeProfits,"Buy",911,0,Green);
+   OrderSend(Symbol(),OP_BUY,Lots,Ask,0,NULL,Ask+takeProfits,"HedgeAndHoldBuy",911,0,Green);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -79,7 +91,7 @@ void buy()
 //+------------------------------------------------------------------+
 void sell()
   {
-   OrderSend(Symbol(),OP_SELL,Lots,Bid,0,NULL,Bid-takeProfits,"Sell",911,0,Red);
+   OrderSend(Symbol(),OP_SELL,Lots,Bid,0,NULL,Bid-takeProfits,"HedgeAndHoldSell",911,0,Red);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
