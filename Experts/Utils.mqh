@@ -85,15 +85,21 @@ public:
         {
          for(int c=0; c<OrdersTotal(); c++)
            {
-            OrderSelect(c,SELECT_BY_POS);
+            if(OrderSelect(c,SELECT_BY_POS)==true)
+              {
 
-            if(OrderType()==OP_BUY)
-              {
-               OrderClose(OrderTicket(),OrderLots(),Bid,3,Green);
-              }
-            else if(OrderType()==OP_SELL)
-              {
-               OrderClose(OrderTicket(),OrderLots(),Ask,3,Red);
+               if(OrderType()==OP_BUY)
+                 {
+                  if(OrderClose(OrderTicket(),OrderLots(),Bid,3,Green)!=true){
+                     Print("Error trying to close Order #",GetLastError());
+                  }
+                 }
+               else if(OrderType()==OP_SELL)
+                 {
+                  if(OrderClose(OrderTicket(),OrderLots(),Ask,3,Red)!=true){
+                   Print("Error trying to close Order #",GetLastError());
+                  }
+                 }
               }
            }
         }
