@@ -1,11 +1,9 @@
 //+------------------------------------------------------------------+
 //|                                                 HedgeAndHold.mq4 |
-//|                        Copyright 2017, MetaQuotes Software Corp. |
-//|                                             https://www.mql5.com |
+//|                        Copyright 2017, Compica.                  |
 //+------------------------------------------------------------------+
-#property copyright "Copyright 2017, MetaQuotes Software Corp."
-#property link      "https://www.mql5.com"
-#property version   "1.0"
+#property copyright "Copyright 2017, Compica."
+#property version   "v1.1"
 #property strict
 
 #include "Utils.mqh"
