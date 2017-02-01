@@ -11,8 +11,8 @@
 #include "Utils.mqh"
 
 input double takeProfits=0.0005;
-input double stopLoss=0.0135;
-input double Lots=0.01;
+input double stopLoss=0.0035;
+input double Lots=0.10;
 Utils utils;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -55,7 +55,7 @@ bool isNewBar()
 void OnTick()
   {
 //---
-   if(isNewBar())
+   if(isNewBar() && (iATR(NULL,0,3,0)<iATR(NULL,0,9,0)))
      {
       if(OrdersTotal()<10)
         {
