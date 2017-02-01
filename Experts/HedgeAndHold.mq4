@@ -59,7 +59,6 @@ void OnTick()
      {
       if(OrdersTotal()<10)
         {
-
          buy();
          sell();
          if(OrdersBuyTotal()>OrdersSellTotal())
@@ -82,21 +81,24 @@ void OnTick()
 //+------------------------------------------------------------------+
 void buy()
   {
-   OrderSend(Symbol(),OP_BUY,Lots,Ask,1,Ask-stopLoss,Ask+takeProfits,"HedgeAndHoldBuy",911,0,Green);
+
+   int ticket= OrderSend(Symbol(),OP_BUY,Lots,Ask,0,Bid-stopLoss,Ask+takeProfits,"HedgeAndHoldBuy",911,0,Green);
+   if(ticket<=0)
+     {
+      Print("Error trying to BUY #",GetLastError());
+     }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 void sell()
   {
-   OrderSend(Symbol(),OP_SELL,Lots,Bid,1,Bid+stopLoss,Bid-takeProfits,"HedgeAndHoldSell",911,0,Red);
+   int ticket=OrderSend(Symbol(),OP_SELL,Lots,Bid,0,Ask+stopLoss,Bid-takeProfits,"HedgeAndHoldSell",911,0,Red);
+   if(ticket<=0)
+     {
+      Print("Error trying to BUY #",GetLastError());
+     }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
